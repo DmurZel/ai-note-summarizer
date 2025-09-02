@@ -1,0 +1,10 @@
+#Virtual environment
+
+#Python cache
+__pycache__/
+*.pyc
+
+# IDE/editor files (optional, for VSCode, Pycharm, etc.)
+.vscode/
+.idea/
+
