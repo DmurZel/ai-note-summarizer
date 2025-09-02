@@ -1,9 +1,24 @@
-def summarize_text(text: str) -> str:
-    # Placeholder for actual summarization logic
-    # In a real implementation, this could call an AI model or use NLP techniques
-    if not text:
-        return "No text provided to summarize."
-    return "This is a summarized version of the provided text."
-    # For demonstration, we'll just return the first 50 characters
-    return text[:50] + ("..." if len(text) > 50 else "")
-    return "This is a summarized version of the provided text."
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
+from app.services.summarizer import summarize_text
+
+router = APIRouter(
+    prefix="/summarize",
+    tags=["summarize"]
+)
+
+# Request body model
+class SummarizeRequest(BaseModel):
+    text: str
+
+# Response model
+class SummarizeResponse(BaseModel):
+    summary: str
+
+@router.post("/", response_model=SummarizeResponse)
+def summarize(request: SummarizeRequest):
+    if not request.text.strip():
+        raise HTTPException(status_code=400, detail="No text provided to summarize.")
+
+    summary = summarize_text(request.text)
+    return SummarizeResponse(summary=summary)
