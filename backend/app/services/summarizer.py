@@ -1,16 +1,14 @@
-import openai
 import os
+from openai import OpenAI
 
-# Make sure you set your API key as an environment variable
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def summarize_text(text: str) -> str:
-    if not text.strip():
+    if not text:
         return "No text provided to summarize."
-    
-    response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt=f"Summarize the following text:\n{text}",
-        max_tokens=60
-    )
-    return response.choices[0].text.strip()
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",  # lightweight model for summaries
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant that summarizes text."},
+            {"role": "user", "content": f"Summarize this: {text}
