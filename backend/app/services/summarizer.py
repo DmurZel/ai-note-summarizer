@@ -1,24 +1,16 @@
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
-from app.services.summarizer import summarize_text
+import openai
+import os
 
-router = APIRouter(
-    prefix="/summarize",
-    tags=["summarize"]
-)
+# Make sure you set your API key as an environment variable
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
-# Request body model
-class SummarizeRequest(BaseModel):
-    text: str
-
-# Response model
-class SummarizeResponse(BaseModel):
-    summary: str
-
-@router.post("/", response_model=SummarizeResponse)
-def summarize(request: SummarizeRequest):
-    if not request.text.strip():
-        raise HTTPException(status_code=400, detail="No text provided to summarize.")
-
-    summary = summarize_text(request.text)
-    return SummarizeResponse(summary=summary)
+def summarize_text(text: str) -> str:
+    if not text.strip():
+        return "No text provided to summarize."
+    
+    response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=f"Summarize the following text:\n{text}",
+        max_tokens=60
+    )
+    return response.choices[0].text.strip()
