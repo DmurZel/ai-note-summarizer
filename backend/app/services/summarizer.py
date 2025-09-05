@@ -11,4 +11,9 @@ def summarize_text(text: str) -> str:
         model="gpt-4o-mini",  # lightweight model for summaries
         messages=[
             {"role": "system", "content": "You are a helpful assistant that summarizes text."},
-            {"role": "user", "content": f"Summarize this: {text}
+            {"role": "user", "content": f"Summarize this: {text}"}
+        ],
+        max_tokens=100
+    )
+
+    return response.choices[0].message.content.strip()

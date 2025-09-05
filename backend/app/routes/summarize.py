@@ -1,2 +1,16 @@
 from fastapi import APIRouter, HTTPException
-from app.models.summ
+from app.models.summarize import SummarizeRequest, SummarizeResponse
+from app.services.summarizer import summarize_text
+
+router = APIRouter(
+    prefix="/summarize",
+    tags=["summarize"]
+)
+
+@router.post("/", response_model=SummarizeResponse)
+def summarize(request: SummarizeRequest):
+    if not request.text.strip():
+        raise HTTPException(status_code=400, detail="No text provided to summarize.")
+
+    summary = summarize_text(request.text)
+    return SummarizeResponse(summary=summary)
