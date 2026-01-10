@@ -2,8 +2,8 @@ from fastapi import APIRouter, HTTPException
 from app.models.summarize import SummarizeRequest, SummarizeResponse
 from app.services.summarizer import summarize_text
 
-router = APIRouter(
-    prefix="/summarize",
+router = APIRouter( # Create a router for summarization endpoints
+    prefix="/summarize", # Prefix for all routes in this router
     tags=["summarize"]
 )
 

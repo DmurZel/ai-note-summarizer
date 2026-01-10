@@ -1,8 +1,14 @@
 #Virtual environment
+fastapi-env/
+venv/
+.env
 
 #Python cache
 __pycache__/
 *.pyc
+
+# macOS
+.DS_Store
 
 # IDE/editor files (optional, for VSCode, Pycharm, etc.)
 .vscode/

@@ -1,5 +1,7 @@
 from fastapi import FastAPI # Import FastAPI
 from app.routes import summarize # Import summarize router
+from dotenv import load_dotenv
+load_dotenv()
 #Backend Server
 # Defines API routes that clients(curl, frontend, Swagger UI) can call
 #Runs with Uvicorn, which is the ASGI web server
