@@ -3,6 +3,8 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+.DS_Store
+
 # C extensions
 *.so
 
@@ -143,6 +145,10 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+
+# Backend virtual envs
+backend/fastapi-env/
+backend/venv/
 
 # Spyder project settings
 .spyderproject
